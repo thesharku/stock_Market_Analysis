@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np 
+import yfinance as yf
+import seaborn as sb
 # import graph libraries 
 # import yfinance as yf
 from datetime import datetime 
@@ -11,7 +13,11 @@ start = datetime(end.year-1, end.month, end.day)
 # what stocks are we evaluating 
 stock_list = []
 
-# function that calculates the bollinger bands. 1. Calculate simple moving average 2. calculate standard deviation 3. Calculate bands add/substract (2*SD) to the SMA. 4. Typically done in 20 day period intervals 
+# function that calculates the bollinger bands. 
+# 1. Calculate simple moving average 
+# 2. calculate standard deviation 
+# 3. Calculate bands add/substract (2*SD) to the SMA. 
+# 4. Typically done in 20 day period intervals 
 
 def calculate_bollinger_bands(data, length = 20):
     data['SMA'] = data['Close'].rolling(length).mean()
@@ -23,8 +29,8 @@ def calculate_bollinger_bands(data, length = 20):
 
 #download stock data from yf and calculate bb
 for stock in stock_list:
-    globals()[stock] = yf.download(stock, start =start, end = end)
-    globals()[stock] = calculate_bollinger_bands(globals()[stock])
+    [stock] = yf.download(stock, start =start, end = end)
+    [stock] = calculate_bollinger_bands([stock])
 
 # plot the function. Havent looked into this yet 
 
